@@ -1,19 +1,18 @@
 defmodule BinarySearch do
-  #this implementation is more complicated than I would like
+  #I think this one has less space complexity
+  #given that it doesn't create variables
+
+  def search({sorted_list, search_term}) do
+    search(list_halves(sorted_list), search_term)
+  end
+  #entry
 
   def search([], _search_term) do
     nil
   end
   #exit for term not in list
 
-  def search(sorted_list, search_term) do
-    {left_list, right_list} = list_halves(sorted_list)
-    #split the list in two "halves" (of differing length if length(list) is odd)
-    search(left_list, right_list, search_term)
-  end
-  #entry
-
-  def search(left_list, [h | right_tail], search_term) do
+  def search({left_list, [h | right_tail]}, search_term) do
     #accessing the last item of left_list is O(n) not O(1)
     #accessing the first item of right list is O(1)
     #
@@ -43,14 +42,18 @@ defmodule BinarySearch do
     #we return search([], search_term) in both cases, triggering
     #the nil output of the first clause of search/2 above
     cond do
-      h < search_term -> search(right_tail, search_term)
+      h < search_term -> search({right_tail, search_term})
+      #if the search term is greater than the head of the right list
+      #we can discard the left list entirely
 
       h == search_term -> search_term
       #exit condition where search_term is in right_list
-      h > search_term -> search(left_list, search_term)
+      h > search_term -> search({left_list, search_term})
+      #if the search term is less than the head of the right list
+      #we can discard the right list entirely
     end
   end
-  #check
+  #checking step
 
   def list_halves(list) do
     #split a list into two 'halves', in the case of an odd-length list
