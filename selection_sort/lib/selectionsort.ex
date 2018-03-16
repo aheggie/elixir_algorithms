@@ -1,18 +1,14 @@
-defmodule Selectionsort do
-  @moduledoc """
-  Documentation for Selectionsort.
-  """
+defmodule SelectionSort do
+  def sort(list) do
+    sort(list, [])
+  end
 
-  @doc """
-  Hello world.
+  defp sort([], results) do
+    results
+  end
 
-  ## Examples
-
-      iex> Selectionsort.hello
-      :world
-
-  """
-  def hello do
-    :world
+  defp sort(list, results) do
+    {min, remaining} = List.pop_at(list, Which.which(:max, list))
+    sort(remaining, [min | results])
   end
 end
