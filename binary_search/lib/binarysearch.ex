@@ -2,11 +2,19 @@ defmodule BinarySearch do
   #I think this one has less space complexity
   #given that it doesn't create variables in search/1
 
+  @moduledoc """
+  Implements divide-and-conquer binary search.
+
+  BinarySearch.search/1 returns the search term if found, or nil
+
+  BinarySearch.is_in/1 wraps BinarySearch.search/1 to return true if found, or false.
+  """
+
   @doc """
   BinarySearch.is_in/1 is a boolean wrapper around BinarySearch.search/1
 
-  It takes a tuple of and ordered list and a number to search for and returns true
-  if the number is in the list and false if not.
+  It takes a tuple of an ordered list of numbers and a number to search for,
+  and returns true if the number is in the list and false if not.
   """
 
   @spec is_in({list(), number()}) :: boolean()
@@ -33,7 +41,7 @@ defmodule BinarySearch do
   #exit for term not in list
 
   def search({sorted_list, search_term}) do
-    search(list_halves(sorted_list), search_term)
+    search(ListSplit.into_halves(sorted_list), search_term)
   end
   #entry
 
@@ -79,21 +87,4 @@ defmodule BinarySearch do
     end
   end
   #checking step
-
-  @doc """
-  list_halves/1 is a wrapper around Enum.split/2 that takes a list and splits
-  that list at its halfway point into a tuple of two half-length lists
-
-  Note: In cases where the input length of the list is odd, the first half is
-  the shorter one.
-  """
-
-  @spec list_halves(list()) :: {list(), list()}
-
-  def list_halves(list) do
-    #split a list into two 'halves', in the case of an odd-length list
-    #the first half is the shorter one
-    Enum.split(list, div(length(list), 2))
-  end
-
 end
