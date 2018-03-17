@@ -1,18 +1,43 @@
 defmodule BinarySearch do
   #I think this one has less space complexity
-  #given that it doesn't create variables
+  #given that it doesn't create variables in search/1
+
+  @doc """
+  BinarySearch.is_in/1 is a boolean wrapper around BinarySearch.search/1
+
+  It takes a tuple of and ordered list and a number to search for and returns true
+  if the number is in the list and false if not.
+  """
+
+  @spec is_in({list(), number()}) :: boolean()
+
+  def is_in({list, search_term}) do
+    search_result = search({list, search_term})
+    cond do
+       search_result == search_term -> true
+       search_result == nil -> false
+    end
+  end
+
+  @doc """
+  BinarySearch.search/1 takes a tuple of an ordered list of numbers,
+  and a number to search for, and returns that number if it is in the list,
+  otherwise returning nil
+  """
+
+  @spec search({list(), number()}) :: number()
+
+  def search({[], _search_term}) do
+    nil
+  end
+  #exit for term not in list
 
   def search({sorted_list, search_term}) do
     search(list_halves(sorted_list), search_term)
   end
   #entry
 
-  def search([], _search_term) do
-    nil
-  end
-  #exit for term not in list
-
-  def search({left_list, [h | right_tail]}, search_term) do
+  defp search({left_list, [h | right_tail]}, search_term) do
     #accessing the last item of left_list is O(n) not O(1)
     #accessing the first item of right list is O(1)
     #
@@ -54,6 +79,16 @@ defmodule BinarySearch do
     end
   end
   #checking step
+
+  @doc """
+  list_halves/1 is a wrapper around Enum.split/2 that takes a list and splits
+  that list at its halfway point into a tuple of two half-length lists
+
+  Note: In cases where the input length of the list is odd, the first half is
+  the shorter one.
+  """
+
+  @spec list_halves(list()) :: {list(), list()}
 
   def list_halves(list) do
     #split a list into two 'halves', in the case of an odd-length list
