@@ -42,6 +42,8 @@ defmodule BinarySearch do
 
   def search({sorted_list, search_term}) do
     search(ListSplit.into_halves(sorted_list), search_term)
+    #ListSplit.into_halves splits a list into two 'halves';
+    #in the case of an odd-length input list, the first half is the shorter one
   end
   #entry
 
