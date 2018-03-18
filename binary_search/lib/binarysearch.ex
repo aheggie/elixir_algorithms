@@ -51,9 +51,9 @@ defmodule BinarySearch do
     #
     #I avoid recursively running an O(n) operation on left_list
     #by only comparing with the first item of right_list
-    #This works because list_halves called in the second clause of search/2
+    #This works because ListSplit.into_halves/1 called in the second clause of search/2
     #will split a one-element list in this way:
-    # > list_halves([1])
+    # > ListSplit.into_halves([1])
     # > {[], [1]}
     #
     #-therefore, a valid list always ends up as the second argument here
